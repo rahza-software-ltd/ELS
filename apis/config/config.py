@@ -8,7 +8,7 @@ class connection():
 		self.host = "localhost"
 		self.username = "root"
 		self.password = ""
-		self.dbname = "easywallet"
+		self.dbname = "els"
 		self.app = Flask(__name__)
 
 	def startConn(self):

@@ -18,7 +18,6 @@ from flask_inputs.validators import JsonSchema
 from functions import fstack_json_schema
 import json
 import hashlib
-import netifaces
 import requests
 import socket
 
@@ -58,7 +57,7 @@ class Authenticate(Resource):
             __email = req_data['regno']
             __password = req_data['password']
 
-            if __regno in session:
+            if __email in session:
                 return jsonify({'StatusCode' : '201', 'message':'sessionActive'})
 
             cursor.execute("SELECT COUNT(1) FROM users WHERE email = {};".format(__email))
@@ -74,7 +73,7 @@ class Authenticate(Resource):
                     if __password  == row[1]:
                         session['email'] = __email
                         session['userid'] = row[0]
-                        return jsonify({'StatusCode' : '200', 'message':'successfull', 'sessionId':session['userid'], "sessionRegno":session['regno']})
+                        return jsonify({'StatusCode' : '200', 'message':'successfull', 'sessionId':session['userid'], "email":session['email']})
                     else:
                         return jsonify({'StatusCode':'201', 'message':'Invalid password', 'data':count})
                 elif row[2] == 2:
